@@ -5,6 +5,12 @@
     <RootNamespace>DAL_Initializer</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Company>$(Septimiy)</Company>
+    <Title>DAL for project</Title>
+    <PackageId>DAL-Core_NG_Project</PackageId>
+    <Authors>Septimiy</Authors>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DAL-Core\DAL-Core.csproj" />
+    <ProjectReference Include="..\DAL-Core\DAL-Core.csproj" IncludeAssets="all" />
   </ItemGroup>
 
 </Project>

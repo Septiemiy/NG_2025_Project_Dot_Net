@@ -5,6 +5,9 @@
     <RootNamespace>DAL_Core</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Company>$(Septimiy)</Company>
+    <Title>DAL-Core_NG_Project</Title>
   </PropertyGroup>
 
   <ItemGroup>

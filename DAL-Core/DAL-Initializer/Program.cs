@@ -14,7 +14,7 @@ namespace DAL_Initializer
             using (var scope = host.Services.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<SmartHomeDbContext>();
-                context.Database.Migrate();
+                context.Database.EnsureCreated();
             }
         }
 
