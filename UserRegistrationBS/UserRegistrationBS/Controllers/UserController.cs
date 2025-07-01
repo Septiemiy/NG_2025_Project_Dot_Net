@@ -29,6 +29,6 @@ public class UserController : Controller
             return StatusCode(500, "An error occurred while creating the user.");
         }
 
-        return View();
+        return Ok(userGuid);
     }
 }

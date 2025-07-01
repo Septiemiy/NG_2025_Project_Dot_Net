@@ -14,7 +14,7 @@ namespace DAL_Initializer
             using (var scope = host.Services.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<SmartHomeDbContext>();
-                context.Database.EnsureCreated();
+                context.Database.Migrate();
             }
         }
 
@@ -27,7 +27,7 @@ namespace DAL_Initializer
                 .ConfigureServices((context, services) =>
                 {
                     services.AddDbContext<SmartHomeDbContext>(options =>
-                        options.UseSqlServer(context.Configuration.GetConnectionString("DbConnectionString")));
+                        options.UseSqlServer(context.Configuration.GetConnectionString("Server=DESKTOP-A8GVK05;Database=SmartHome;Trusted_Connection=True;Encrypt=False;")));
                 });
     }
 }

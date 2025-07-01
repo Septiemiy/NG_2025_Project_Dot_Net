@@ -19,6 +19,11 @@ namespace DAL_Core
         public DbSet<Trigger> Triggers { get; set; }
         public DbSet<User> Users { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=DESKTOP-A8GVK05;Database=SmartHome;Trusted_Connection=True;Encrypt=False;");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
             modelBuilder.ApplyConfiguration(new CommandConfiguration());
