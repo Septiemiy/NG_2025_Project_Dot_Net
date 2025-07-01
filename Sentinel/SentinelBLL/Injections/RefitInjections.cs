@@ -21,8 +21,6 @@ namespace SentinelBLL.Injections
             var userSettings = configuration.GetSection(UserClientSettings.SectionName)
                     .Get<UserClientSettings>() ?? throw new ArgumentNullException("UserClient configuration is missing");
 
-            Console.WriteLine($"UserClient BaseAddress: {userSettings.BaseAddress}");
-
             services.AddRefitClient<IUserClient>()
                 .ConfigureHttpClient(client => client.BaseAddress = new Uri(userSettings.BaseAddress));
         }

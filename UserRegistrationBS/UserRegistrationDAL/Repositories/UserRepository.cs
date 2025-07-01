@@ -1,5 +1,6 @@
 ﻿using DAL_Core;
 using DAL_Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,14 @@ namespace UserRegistrationDAL.Repositories
         public UserRepository(SmartHomeDbContext ctx) : base(ctx)
         {
             _ctx = ctx;
+        }
+
+        public async Task<User> GetUserByUsername(string username)
+        {
+            var user = await _ctx.Set<User>()
+                .FirstOrDefaultAsync(u => u.Username == username);
+
+            return user;
         }
     }
 }

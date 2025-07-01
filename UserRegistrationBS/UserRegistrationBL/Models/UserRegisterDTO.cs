@@ -8,13 +8,11 @@ using System.Threading.Tasks;
 
 namespace UserRegistrationBL.Models
 {
-    public class UserDTO
+    public class UserRegisterDTO
     {
         public string Username { get; set; }
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
         public string Email { get; set; }
-
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public UsersRoles Role { get; set; }
         public DateTime CreatedAt { get; set; }
     }

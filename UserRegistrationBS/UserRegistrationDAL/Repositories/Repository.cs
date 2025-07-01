@@ -50,9 +50,12 @@ namespace UserRegistrationDAL.Repositories
             return await _ctx.Set<T>().FindAsync(id);
         }
 
-        public Task<Guid> UpdateAsync(T entity)
+        public async Task<Guid> UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            _ctx.Set<T>().Update(entity);
+            await _ctx.SaveChangesAsync();
+
+            return entity.Id;
         }
     }
 }

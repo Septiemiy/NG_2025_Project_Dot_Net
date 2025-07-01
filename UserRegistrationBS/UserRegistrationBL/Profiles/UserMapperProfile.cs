@@ -13,7 +13,9 @@ namespace UserRegistrationBL.Profiles
     {
         public UserMapperProfile() 
         {
-            CreateMap<User, UserDTO>()
+            CreateMap<User, UserRegisterDTO>()
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.PasswordHash))
                 .ReverseMap();
         }
     }

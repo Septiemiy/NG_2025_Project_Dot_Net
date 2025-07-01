@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SentinelBLL.Models
 {
-    public class UserDTO
+    public class UserRegistrationDTO
     {
         public string Username { get; set; }
         public string PasswordHash { get; set; }
@@ -16,6 +16,6 @@ namespace SentinelBLL.Models
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public UsersRoles Role { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace UserRegistrationBL.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<Guid> CreateUserAsync(UserDTO userDto);
+        Task<string> CreateUserAsync(UserRegisterDTO userDto);
+        Task<string> CheckUserLogin(UserLoginDTO userLoginDto);
     }
 }

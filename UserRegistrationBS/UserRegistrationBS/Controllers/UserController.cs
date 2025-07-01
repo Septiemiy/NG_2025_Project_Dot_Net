@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserRegistrationBL.Models;
 using UserRegistrationBL.Services.Interfaces;
@@ -5,6 +6,7 @@ using UserRegistrationBL.Services.Interfaces;
 namespace UserRegistrationBS.Controllers;
 
 [Route("api/user")]
+[ApiController]
 public class UserController : Controller
 {
     private readonly IUserService _userService;
@@ -15,20 +17,38 @@ public class UserController : Controller
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> CreateUser([FromBody] UserDTO userDto)
+    public async Task<IActionResult> CreateUser([FromBody] UserRegisterDTO userRegisterDto)
     {
-        if (userDto == null)
+        if (userRegisterDto == null)
         {
             return BadRequest("User data is null.");
         }
 
-        var userGuid = await _userService.CreateUserAsync(userDto);
+        var userToken = await _userService.CreateUserAsync(userRegisterDto);
 
-        if (userGuid == Guid.Empty)
+        if (string.IsNullOrEmpty(userToken))
         {
-            return StatusCode(500, "An error occurred while creating the user.");
+            return BadRequest("User registration failed.");
         }
 
-        return Ok(userGuid);
+        return Ok(userToken);
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> UserLogin([FromBody] UserLoginDTO userLoginDto)
+    {
+        if (userLoginDto == null)
+        {
+            return BadRequest("User login data is null.");
+        }
+
+        var userToken = await _userService.CheckUserLogin(userLoginDto);
+
+        if (string.IsNullOrEmpty(userToken))
+        {
+            return Unauthorized("Invalid username or password.");
+        }
+
+        return Ok(userToken);
     }
 }
