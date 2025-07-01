@@ -1,11 +1,10 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using UserRegistrationBL.Models;
 using UserRegistrationBL.Services.Interfaces;
 
 namespace UserRegistrationBS.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/user")]
 public class UserController : Controller
 {
     private readonly IUserService _userService;

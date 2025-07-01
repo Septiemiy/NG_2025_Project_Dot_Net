@@ -17,4 +17,8 @@
     <ProjectReference Include="..\UserRegistrationDAL\UserRegistrationDAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
