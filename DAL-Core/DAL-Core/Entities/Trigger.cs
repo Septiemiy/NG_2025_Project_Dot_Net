@@ -15,5 +15,6 @@ namespace DAL_Core.Entities
         public string TriggerCondition { get; set; }
         public string Action { get; set; }
         public UsersRoles Role { get; set; }
+        public ConditionsStatus Status { get; set; }
     }
 }

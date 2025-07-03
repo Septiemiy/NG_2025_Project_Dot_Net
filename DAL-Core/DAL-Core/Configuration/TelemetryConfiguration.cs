@@ -23,7 +23,7 @@ namespace DAL_Core.Configuration
 
             builder.Property(t => t.DataValue)
                 .IsRequired()
-                .HasMaxLength(300);
+                .HasMaxLength(100);
         }
     }
 }

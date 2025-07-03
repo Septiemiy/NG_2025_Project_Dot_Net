@@ -11,7 +11,7 @@ namespace DAL_Core.Entities
     {
         public Guid DeviceId { get; set; }
         public DateTime Timestamp { get; set; }
-        public DataTypes DataType { get; set; }
+        public string DataType { get; set; }
         public string DataValue { get; set; }
     }
 }

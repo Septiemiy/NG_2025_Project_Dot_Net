@@ -24,13 +24,16 @@ namespace DAL_Core.Configuration
 
             builder.Property(t => t.TriggerCondition)
                 .IsRequired()
-                .HasMaxLength(300);
+                .HasMaxLength(100);
 
             builder.Property(t => t.Action)
                 .IsRequired()
-                .HasMaxLength(300);
+                .HasMaxLength(100);
 
             builder.Property(t => t.Role)
+                .IsRequired();
+
+            builder.Property(t => t.Status)
                 .IsRequired();
         }
     }
