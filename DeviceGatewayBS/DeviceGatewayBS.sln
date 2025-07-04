@@ -5,6 +5,10 @@ VisualStudioVersion = 17.13.35806.99 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceGatewayBS", "DeviceGatewayBS\DeviceGatewayBS.csproj", "{C2EC1FB8-F2DE-42E0-BF5F-B526507E067E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceGatewayDAL", "DeviceGatewayDAL\DeviceGatewayDAL.csproj", "{BC1BFE56-7520-4C9F-9C7D-45355BF622C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceGatewayBLL", "DeviceGatewayBLL\DeviceGatewayBLL.csproj", "{D6E867E2-F46C-4081-BB9B-907E679D4AF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{C2EC1FB8-F2DE-42E0-BF5F-B526507E067E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2EC1FB8-F2DE-42E0-BF5F-B526507E067E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2EC1FB8-F2DE-42E0-BF5F-B526507E067E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC1BFE56-7520-4C9F-9C7D-45355BF622C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC1BFE56-7520-4C9F-9C7D-45355BF622C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC1BFE56-7520-4C9F-9C7D-45355BF622C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC1BFE56-7520-4C9F-9C7D-45355BF622C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6E867E2-F46C-4081-BB9B-907E679D4AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6E867E2-F46C-4081-BB9B-907E679D4AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6E867E2-F46C-4081-BB9B-907E679D4AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6E867E2-F46C-4081-BB9B-907E679D4AF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,8 +13,6 @@ namespace SentinelBLL.Models
         public string Username { get; set; }
         public string PasswordHash { get; set; }
         public string Email { get; set; }
-
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public UsersRoles Role { get; set; }
         public DateTime CreatedAt { get; set; }
     }
