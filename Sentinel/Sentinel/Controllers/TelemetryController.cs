@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using SentinelBLL.Models;
 using SentinelBLL.Service.Interface;
+using SentinelBLL.SignalRService;
 
 namespace Sentinel.Controllers;
 
@@ -9,10 +11,12 @@ namespace Sentinel.Controllers;
 public class TelemetryController : ControllerBase
 {
     private readonly ITelemetryService _telemetryService;
+    private readonly IHubContext<SignalRHub> _hubContext;
 
-    public TelemetryController(ITelemetryService telemetryService)
+    public TelemetryController(ITelemetryService telemetryService, IHubContext<SignalRHub> hubContext)
     {
         _telemetryService = telemetryService;
+        _hubContext = hubContext;
     }
 
     [HttpPost("get-data")]
@@ -20,6 +24,8 @@ public class TelemetryController : ControllerBase
     {
         var telemetryData = await _telemetryService.GetTelemetryDataAsync(telemetryDTO);
         
+        await _hubContext.Clients.All.SendAsync("ReceiveTelemetryData", telemetryData);
+
         return Ok(telemetryData);
     }
 }
