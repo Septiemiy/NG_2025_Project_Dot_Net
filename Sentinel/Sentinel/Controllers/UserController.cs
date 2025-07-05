@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SentinelBLL.Clients;
 using SentinelBLL.Models;
+using SentinelBLL.Service.Interface;
 
 namespace Sentinel.Controllers;
 
@@ -10,22 +11,17 @@ namespace Sentinel.Controllers;
 [ApiController]
 public class UserController : ControllerBase
 {
-    private readonly IUserClient _userClient;
+    private readonly IUserService _userService;
 
-    public UserController(IUserClient userClient)
+    public UserController(IUserService userService)
     {
-        _userClient = userClient;
+        _userService = userService;
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> CreateUser([FromBody] UserRegistrationDTO userDto)
+    public async Task<IActionResult> CreateUser([FromBody] UserRegistrationDTO userRegistrationDto)
     {
-        if (userDto == null)
-        {
-            return BadRequest("User data cannot be null.");
-        }
-
-        var userToken = await _userClient.CreateUserAsync(userDto);
+        var userToken = await _userService.CreateUserAsync(userRegistrationDto);
 
         return Ok(userToken);
     }
@@ -33,18 +29,8 @@ public class UserController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> LoginUser([FromBody] UserLoginDTO userLoginDto)
     {
-        if (userLoginDto == null)
-        {
-            return BadRequest("Login data cannot be null.");
-        }
-        
-        var userToken = await _userClient.LoginUserAsync(userLoginDto);
-        
-        if (string.IsNullOrEmpty(userToken))
-        {
-            return Unauthorized("Invalid username or password.");
-        }
-        
+        var userToken = await _userService.LoginUserAsync(userLoginDto);
+                       
         return Ok(userToken);
     }
 }

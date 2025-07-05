@@ -11,10 +11,10 @@ namespace SentinelBLL.Clients
     public interface IUserClient
     {
         [Post("/api/user/register")]
-        Task<string> CreateUserAsync(UserRegistrationDTO userDTO);
+        Task<string> CreateUserAsync([Body] UserRegistrationDTO userRegistrationDTO);
 
         [Post("/api/user/login")]
-        Task<string> LoginUserAsync(UserLoginDTO userLoginDTO);
+        Task<string> LoginUserAsync([Body] UserLoginDTO userLoginDTO);
 
     }
 }

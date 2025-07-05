@@ -19,10 +19,16 @@ namespace SentinelBLL.Injections
             IConfiguration configuration)
         {
             var userSettings = configuration.GetSection(UserClientSettings.SectionName)
-                    .Get<UserClientSettings>() ?? throw new ArgumentNullException("UserClient configuration is missing");
+                    .Get<UserClientSettings>();
+
+            var deviceGatewaySettings = configuration.GetSection(DeviceGatewaySettings.SectionName)
+                    .Get<DeviceGatewaySettings>();
 
             services.AddRefitClient<IUserClient>()
                 .ConfigureHttpClient(client => client.BaseAddress = new Uri(userSettings.BaseAddress));
+
+            services.AddRefitClient<ITelemetryClient>()
+                .ConfigureHttpClient(client => client.BaseAddress = new Uri(deviceGatewaySettings.BaseAddress));
         }
     }
 }

@@ -16,7 +16,7 @@ public class TelemetryController : Controller
     }
 
     [HttpPost("get-data")]
-    public async Task<IActionResult> GetTelemetryData([FromBody] TelemetryDTO telemetryDTO)
+    public async Task<IActionResult> GetTelemetryDataAsync([FromBody] TelemetryDTO telemetryDTO)
     {
         if (telemetryDTO == null)
         {

@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace SentinelBLL.Service.Interface
 {
-    public interface IUserService
+    public interface ITelemetryService
     {
-        Task<string> CreateUserAsync(UserRegistrationDTO userRegistrationDTO);
-        Task<string> LoginUserAsync(UserLoginDTO userLoginDTO);
+        Task<TelemetryDTO> GetTelemetryDataAsync(TelemetryDTO telemetryDTO);
     }
 }

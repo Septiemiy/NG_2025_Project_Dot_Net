@@ -10,6 +10,10 @@ builder.Services.Configure<UserClientSettings>(
     builder.Configuration.GetSection(UserClientSettings.SectionName)
 );
 
+builder.Services.Configure<DeviceGatewaySettings>(
+    builder.Configuration.GetSection(DeviceGatewaySettings.SectionName)
+);
+
 builder.Services.AddRefitInjections(builder.Configuration);
 
 builder.Services.AddSentinelServices();

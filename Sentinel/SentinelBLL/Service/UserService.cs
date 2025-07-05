@@ -18,9 +18,9 @@ namespace SentinelBLL.Service
             _userClient = userClient;
         }
 
-        public async Task<string> CreateUserAsync(UserRegistrationDTO userDTO)
+        public async Task<string> CreateUserAsync(UserRegistrationDTO userRegistrationDTO)
         {
-            return await _userClient.CreateUserAsync(userDTO);
+            return await _userClient.CreateUserAsync(userRegistrationDTO);
         }
 
         public async Task<string> LoginUserAsync(UserLoginDTO userLoginDTO)

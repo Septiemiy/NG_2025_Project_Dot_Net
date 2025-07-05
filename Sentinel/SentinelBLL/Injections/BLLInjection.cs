@@ -15,6 +15,7 @@ namespace SentinelBLL.Injections
             this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITelemetryService, TelemetryService>();
         }
     }
 }
