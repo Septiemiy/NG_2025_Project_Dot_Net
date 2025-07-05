@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using DAL_Core.Enums;
 using DeviceGatewayBLL.Models;
 using DeviceGatewayBLL.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,6 @@ namespace DeviceGatewayBS.Controllers;
 
 [Route("api/command")]
 [ApiController]
-[Authorize]
 public class CommandController : Controller
 {
     private readonly ICommandService _commandService;
@@ -18,7 +18,7 @@ public class CommandController : Controller
         _commandService = commandService;
     }
 
-    [HttpPost("create")]
+    [HttpPost("sendToAll")]
     public async Task<IActionResult> CreateCommandAsync([FromBody] CommandDTO commandDTO)
     {
         if (commandDTO == null)
@@ -26,15 +26,30 @@ public class CommandController : Controller
             return BadRequest("Command data is null.");
         }
 
-
-        
-        var commandId = await _commandService.AddCommandAsync(commandDTO);
-
-        if (commandId == Guid.Empty)
+        if (await _commandService.SendCommandToAll(commandDTO.CommandName))
         {
-            return StatusCode(500, "An error occurred while saving the command.");
-        }
+            commandDTO.Status = CommandStatus.Success;
+            var commandId = await _commandService.AddCommandAsync(commandDTO);
 
-        return Ok(commandDTO);
+            if (commandId == Guid.Empty)
+            {
+                return StatusCode(500, "An error occurred while saving the command.");
+            }
+
+            return Ok(commandDTO);
+        }
+        else
+        {
+            commandDTO.Status = CommandStatus.Failed;
+            var commandId = await _commandService.AddCommandAsync(commandDTO);
+
+            if (commandId == Guid.Empty)
+            {
+                return StatusCode(500, "An error occurred while saving the command." +
+                                       "Failed to send command to all devices");
+            }
+
+            return StatusCode(500, "Failed to send command to all devices.");
+        }
     }
 }

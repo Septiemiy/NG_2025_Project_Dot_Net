@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDeviceGatewayBLL();
+builder.Services.AddDeviceGatewayBLL(builder.Configuration);
 builder.Services.AddDeviceGatewayDAL(builder.Configuration);
 
 builder.Services.AddAuthorization();

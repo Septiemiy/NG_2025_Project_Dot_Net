@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Messaging.ServiceBus;
 using DAL_Core.Entities;
 using DeviceGatewayBLL.Models;
 using DeviceGatewayBLL.Services.Interfaces;
@@ -15,11 +16,15 @@ namespace DeviceGatewayBLL.Services
     {
         private readonly ICommandRepository _commandRepository;
         private readonly IMapper _mapper;
+        private readonly ServiceBusSender _serviceBusSender;
+        private const string TopicName = "device-commands";
+        private readonly string[] roomsFilter = new[] { "kitchen", "bathroom", "livingroom" };
 
-        public CommandService(ICommandRepository commandRepository, IMapper mapper)
+        public CommandService(ICommandRepository commandRepository, IMapper mapper, ServiceBusClient serviceBusClient)
         {
             _commandRepository = commandRepository;
             _mapper = mapper;
+            _serviceBusSender = serviceBusClient.CreateSender(TopicName);
         }
 
         public async Task<Guid> AddCommandAsync(CommandDTO commandDTO)
@@ -29,6 +34,30 @@ namespace DeviceGatewayBLL.Services
             await _commandRepository.CreateAsync(command);
 
             return command.Id;
+        }
+
+        public async Task<bool> SendCommandToAll(string command)
+        {
+            try
+            {
+                foreach (var room in roomsFilter)
+                {
+                    var message = new ServiceBusMessage(command)
+                    {
+                        ContentType = "application/json",
+                    };
+                    message.ApplicationProperties["room"] = room;
+
+                    await _serviceBusSender.SendMessageAsync(message);
+                }
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending command to all devices: {ex.Message}");
+                return false;
+            }
         }
     }
 }
