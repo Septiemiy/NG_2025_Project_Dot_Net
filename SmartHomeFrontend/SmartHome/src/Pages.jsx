@@ -1,5 +1,6 @@
 import LoginPage from './pages/LoginPage.jsx';
 import RegistrationPage from './pages/RegistrationPage.jsx';
+import SmartHomePage from './pages/SmartHomePage.jsx';
 
 const Pages = [
     {

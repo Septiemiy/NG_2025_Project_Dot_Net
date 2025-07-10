@@ -9,6 +9,14 @@ namespace SentinelBLL.SignalRService
 {
     public class SignalRHub : Hub
     {
+        public Task Subscribe(Guid deviceId)
+        {
+            return Groups.AddToGroupAsync(Context.ConnectionId, $"device-{deviceId}");
+        }
 
+        public Task Unsubscribe(Guid deviceId)
+        {
+            return Groups.RemoveFromGroupAsync(Context.ConnectionId, $"device-{deviceId}");
+        }
     }
 }

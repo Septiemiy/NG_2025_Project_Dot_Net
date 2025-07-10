@@ -23,9 +23,11 @@ public class TelemetryController : ControllerBase
     public async Task<IActionResult> GetTelemetryData([FromBody] TelemetryDTO telemetryDTO)
     {
         var telemetryData = await _telemetryService.GetTelemetryDataAsync(telemetryDTO);
-        
-        await _hubContext.Clients.All.SendAsync("ReceiveTelemetryData", telemetryData);
 
-        return Ok(telemetryData);
+        await _hubContext.Clients
+            .Group($"device-{telemetryData.DeviceId}")
+            .SendAsync("ReceiveTelemetryData", telemetryData);
+
+        return Ok();
     }
 }

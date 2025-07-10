@@ -30,6 +30,6 @@ public class TelemetryController : Controller
             return StatusCode(500, "An error occurred while saving telemetry data.");
         }
 
-        return Ok(telemetryDTO);
+        return Ok(telemetryGuid);
     }
 }
