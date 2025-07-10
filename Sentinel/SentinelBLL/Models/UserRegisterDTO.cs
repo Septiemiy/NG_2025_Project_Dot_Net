@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace SentinelBLL.Models
 {
-    public class UserRegistrationDTO
+    public class UserRegisterDTO
     {
         public string Username { get; set; }
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
         public string Email { get; set; }
         public UsersRoles Role { get; set; }
-        public DateTime CreatedAt { get; set; }
     }
 }

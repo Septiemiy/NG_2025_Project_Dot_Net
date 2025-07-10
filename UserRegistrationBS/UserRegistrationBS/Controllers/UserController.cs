@@ -17,8 +17,9 @@ public class UserController : Controller
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> CreateUser([FromBody] UserRegisterDTO userRegisterDto)
+    public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDTO userRegisterDto)
     {
+        
         if (userRegisterDto == null)
         {
             return BadRequest("User data is null.");
@@ -35,7 +36,7 @@ public class UserController : Controller
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> UserLogin([FromBody] UserLoginDTO userLoginDto)
+    public async Task<IActionResult> UserLoginAsync([FromBody] UserLoginDTO userLoginDto)
     {
         if (userLoginDto == null)
         {

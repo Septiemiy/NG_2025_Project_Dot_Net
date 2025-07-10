@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SentinelBLL.Clients;
@@ -19,15 +20,21 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> CreateUser([FromBody] UserRegistrationDTO userRegistrationDto)
+    public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDTO userRegisterDto)
     {
-        var userToken = await _userService.CreateUserAsync(userRegistrationDto);
+        var json = JsonSerializer.Serialize(userRegisterDto, new JsonSerializerOptions
+        {
+            WriteIndented = true
+        });
+        Console.WriteLine(json);
+
+        var userToken = await _userService.CreateUserAsync(userRegisterDto);
 
         return Ok(userToken);
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> LoginUser([FromBody] UserLoginDTO userLoginDto)
+    public async Task<IActionResult> LoginUserAsync([FromBody] UserLoginDTO userLoginDto)
     {
         var userToken = await _userService.LoginUserAsync(userLoginDto);
                        

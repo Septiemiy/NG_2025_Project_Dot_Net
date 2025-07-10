@@ -4,7 +4,6 @@ import { useState } from "react";
 
 export default function Login() {
     const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
 
@@ -14,11 +13,10 @@ export default function Login() {
         try {
             const response = await axiosClient.post('/user/login', {
                 username,
-                email,
                 password
             });
 
-            const token = response.data.userToken;
+            const token = response.data;
             localStorage.setItem('JwtToken', token);
 
             console.log('Login successful:', response.data);
@@ -36,11 +34,6 @@ export default function Login() {
                         <label htmlFor="username">Username:</label>
                         <input type="text" id="username" value={username}
                         onChange={(data) => setUsername(data.target.value)} required />
-                    </div>
-                    <div>
-                        <label htmlFor="email">Email:</label>
-                        <input type="email" id="email" value={email}
-                        onChange={(data) => setEmail(data.target.value)} required />
                     </div>
                     <div>
                         <label htmlFor="password">Password:</label>
