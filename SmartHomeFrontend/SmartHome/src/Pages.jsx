@@ -1,6 +1,6 @@
 import LoginPage from './pages/LoginPage.jsx';
 import RegistrationPage from './pages/RegistrationPage.jsx';
-import SmartHomePage from './pages/SmartHomePage.jsx';
+import RegisterDevicePage from './pages/RegisterDevicePage.jsx';
 
 const Pages = [
     {
@@ -10,6 +10,10 @@ const Pages = [
     {
         path: '/register',
         element: <RegistrationPage />
+    },
+    {
+        path: '/register-device',
+        element: <RegisterDevicePage />
     }
 ]
 
