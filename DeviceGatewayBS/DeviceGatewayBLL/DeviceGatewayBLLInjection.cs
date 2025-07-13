@@ -1,4 +1,5 @@
-﻿using Azure.Messaging.ServiceBus;
+﻿using Azure.Data.Tables;
+using Azure.Messaging.ServiceBus;
 using DeviceGatewayBLL.Profiles;
 using DeviceGatewayBLL.Services;
 using DeviceGatewayBLL.Services.Interfaces;
@@ -17,10 +18,17 @@ namespace DeviceGatewayBLL
             services.AddScoped<IThresholdService, ThresholdService>();
             services.AddScoped<ICommandService, CommandService>();
             services.AddScoped<ITelemetryService, TelemetryService>();
+            services.AddScoped<IDeviceService, DeviceService>();
+
             services.AddSingleton<ServiceBusClient>(provider =>
             {
                 var connectionString = configuration.GetConnectionString("ServiceBusConnectionString");
                 return new ServiceBusClient(connectionString);
+            });
+
+            services.AddHttpClient("RegisterDeviceClient", client =>
+            {
+                client.BaseAddress = new Uri(configuration.GetConnectionString("RegisterDeviceHttpTriggerUrl"));
             });
 
             services.AddAutoMapper(typeof(TriggerMapperProfile));

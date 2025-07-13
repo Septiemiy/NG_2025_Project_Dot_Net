@@ -16,11 +16,14 @@ public class HttpDeviceAddToTS
     private const string TableName = "RegisteredDevices";
 
     [Function(nameof(HttpDeviceAddToTS))]
-    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
+    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "device/register")] HttpRequest req)
     {
         var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
         
-        var registerDeviceDTO = JsonSerializer.Deserialize<RegisterDeviceDTO>(requestBody);
+        var registerDeviceDTO = JsonSerializer.Deserialize<RegisterDeviceDTO>(requestBody, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
 
         try
         {
@@ -30,6 +33,7 @@ public class HttpDeviceAddToTS
         }
         catch (Exception ex)
         {
+            Console.WriteLine($"Error adding device to table storage: {ex.Message}");
             return new StatusCodeResult(StatusCodes.Status500InternalServerError);
         }
 

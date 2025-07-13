@@ -12,7 +12,7 @@ namespace SmartHomeFuncs.Functions.TableStorage.Services
     {
         public static async Task<CloudTable> GetTableAsync(string tableName)
         {
-            var storageAccount = CloudStorageAccount.Parse("StorageAccountConnectionString");
+            var storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("StorageAccountConnectionString"));
             var tableClient = storageAccount.CreateCloudTableClient();
             var table = tableClient.GetTableReference(tableName);
             await table.CreateIfNotExistsAsync();

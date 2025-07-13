@@ -11,7 +11,7 @@ namespace DeviceGatewayBLL.Models
     {
         public Guid DeviceId { get; set; }
         public string ThresholdName { get; set; }
-        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+        public DateTime Timestamp { get; set; } = DateTime.Now;
         public string Condition { get; set; }
         public string Action { get; set; }
         public ConditionsStatus Status { get; set; }

@@ -11,7 +11,7 @@ namespace DeviceGatewayBLL.Models
     {
         public Guid DeviceId { get; set; }
         public string TriggerName { get; set; }
-        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+        public DateTime Timestamp { get; set; } = DateTime.Now;
         public string TriggerCondition { get; set; }
         public string Action { get; set; }
         public UsersRoles Role { get; set; }

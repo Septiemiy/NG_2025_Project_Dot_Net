@@ -15,7 +15,6 @@ namespace SmartHomeFuncs.Functions.TableStorage.Entity
         public string UserId { get; set; }
         public string Type { get; set; }
         public string Location { get; set; }
-        public string Status { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public DeviceEntity(string messageId, string deviceId, RegisterDeviceDTO registerDeviceDTO) 
@@ -27,7 +26,6 @@ namespace SmartHomeFuncs.Functions.TableStorage.Entity
             UserId = registerDeviceDTO.UserId;
             Type = registerDeviceDTO.Type;
             Location = registerDeviceDTO.Location;
-            Status = registerDeviceDTO.Status;
         }
     }
 }
