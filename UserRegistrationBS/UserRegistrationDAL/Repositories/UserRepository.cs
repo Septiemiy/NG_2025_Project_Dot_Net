@@ -18,7 +18,20 @@ namespace UserRegistrationDAL.Repositories
             _ctx = ctx;
         }
 
-        public async Task<User> GetUserByUsername(string username)
+        public async Task<bool> IsUserByUsernameAndEmailExistAsync(string username, string email)
+        {
+            var user = await _ctx.Set<User>()
+                .FirstOrDefaultAsync(u => u.Username == username && u.Email == email);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<User> GetUserByUsernameAsync(string username)
         {
             var user = await _ctx.Set<User>()
                 .FirstOrDefaultAsync(u => u.Username == username);

@@ -27,13 +27,17 @@ namespace UserRegistrationBL.Services
             _mapper = mapper;
         }
 
-        public async Task<string> CheckUserLogin(UserLoginDTO userLoginDto)
+        public async Task<RegisterLoginResultDTO> CheckUserLoginAsync(UserLoginDTO userLoginDto)
         {
-            var user = await _userRepository.GetUserByUsername(userLoginDto.Username);
+            var user = await _userRepository.GetUserByUsernameAsync(userLoginDto.Username);
 
             if (user == null)
             {
-                return String.Empty;
+                return new RegisterLoginResultDTO
+                {
+                    IsSuccess = false,
+                    Message = "User not found"
+                };
             }
             else
             {
@@ -41,17 +45,36 @@ namespace UserRegistrationBL.Services
                 if (verifyResult == PasswordVerificationResult.Success)
                 {
                     var token = _jwtTokenProviderService.GenerateToken(user);
-                    return token;
+                    
+                    return new RegisterLoginResultDTO
+                    {
+                        IsSuccess = true,
+                        Token = token,
+                        Message = "Login successful"
+                    };
                 }
                 else
                 {
-                    return String.Empty;
+                    return new RegisterLoginResultDTO
+                    {
+                        IsSuccess = false,
+                        Message = "Invalid password"
+                    };
                 }
             }
         }
 
-        public async Task<string> CreateUserAsync(UserRegisterDTO userRegisterDto)
+        public async Task<RegisterLoginResultDTO> CreateUserAsync(UserRegisterDTO userRegisterDto)
         {
+            if(await _userRepository.IsUserByUsernameAndEmailExistAsync(userRegisterDto.Username, userRegisterDto.Email))
+            {
+                return new RegisterLoginResultDTO
+                {
+                    IsSuccess = false,
+                    Message = "User with this username or email already exists"
+                };
+            }
+
             userRegisterDto.Password = _passwordHasher.HashPassword(null, userRegisterDto.Password);
             var user = _mapper.Map<User>(userRegisterDto);
 
@@ -59,7 +82,12 @@ namespace UserRegistrationBL.Services
 
             var token = _jwtTokenProviderService.GenerateToken(user);
 
-            return token;
+            return new RegisterLoginResultDTO 
+            { 
+                IsSuccess = true, 
+                Token = token, 
+                Message = "Registration successful." 
+            };
         }
     }
 }

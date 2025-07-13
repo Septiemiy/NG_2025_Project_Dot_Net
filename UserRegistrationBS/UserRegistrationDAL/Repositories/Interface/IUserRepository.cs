@@ -9,6 +9,7 @@ namespace UserRegistrationDAL.Repositories.Interface
 {
     public interface IUserRepository : IRepository<User>
     {
-        Task<User> GetUserByUsername(string username);
+        Task<User> GetUserByUsernameAsync(string username);
+        Task<bool> IsUserByUsernameAndEmailExistAsync(string username, string email);
     }
 }

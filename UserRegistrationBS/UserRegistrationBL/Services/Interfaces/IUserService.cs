@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL_Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace UserRegistrationBL.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<string> CreateUserAsync(UserRegisterDTO userDto);
-        Task<string> CheckUserLogin(UserLoginDTO userLoginDto);
+        Task<RegisterLoginResultDTO> CreateUserAsync(UserRegisterDTO userDto);
+        Task<RegisterLoginResultDTO> CheckUserLoginAsync(UserLoginDTO userLoginDto);
     }
 }

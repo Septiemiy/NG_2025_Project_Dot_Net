@@ -22,15 +22,9 @@ public class UserController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDTO userRegisterDto)
     {
-        var json = JsonSerializer.Serialize(userRegisterDto, new JsonSerializerOptions
-        {
-            WriteIndented = true
-        });
-        Console.WriteLine(json);
+        var result = await _userService.CreateUserAsync(userRegisterDto);
 
-        var userToken = await _userService.CreateUserAsync(userRegisterDto);
-
-        return Ok(userToken);
+        return Ok(result);
     }
 
     [HttpPost("login")]

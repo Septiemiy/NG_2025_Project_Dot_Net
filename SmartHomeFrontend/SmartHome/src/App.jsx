@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import './App.css'
 import Pages from './Pages'
 import SmartHomePage from "./pages/SmartHomePage";
@@ -9,10 +9,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SmartHomePage />} >
-          <Route index element={<p>Choose device</p>} />
-          <Route path="device/:deviceId" element={<DeviceDetailPage />} />
-        </Route>
+          <Route path="/" element={<SmartHomePage />} >
+            <Route index element={<p>Choose device</p>} />
+            <Route path="device/:deviceId" element={<DeviceDetailPage />} />
+          </Route>
         {
           Pages.map((page, index) => {
             return <Route

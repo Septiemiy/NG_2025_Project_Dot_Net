@@ -1,4 +1,5 @@
-﻿using SentinelBLL.Clients;
+﻿using Refit;
+using SentinelBLL.Clients;
 using SentinelBLL.Models;
 using SentinelBLL.Service.Interface;
 using System;
@@ -18,9 +19,20 @@ namespace SentinelBLL.Service
             _userClient = userClient;
         }
 
-        public async Task<string> CreateUserAsync(UserRegisterDTO userRegisterDTO)
+        public async Task<RegisterLoginResultDTO> CreateUserAsync(UserRegisterDTO userRegisterDTO)
         {
-            return await _userClient.CreateUserAsync(userRegisterDTO);
+            try
+            {
+                var response = await _userClient.CreateUserAsync(userRegisterDTO);
+
+                return response;
+            }
+            catch (ApiException ex)
+            {
+                var error = await ex.GetContentAsAsync<RegisterLoginResultDTO>();
+
+                return error;
+            }
         }
 
         public async Task<string> LoginUserAsync(UserLoginDTO userLoginDTO)

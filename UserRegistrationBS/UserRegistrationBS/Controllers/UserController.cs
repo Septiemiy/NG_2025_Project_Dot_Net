@@ -19,20 +19,23 @@ public class UserController : Controller
     [HttpPost("register")]
     public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDTO userRegisterDto)
     {
-        
         if (userRegisterDto == null)
         {
-            return BadRequest("User data is null.");
+            return BadRequest(new RegisterLoginResultDTO
+            {
+                IsSuccess = false,
+                Message = "User registration data is null."
+            });
         }
 
-        var userToken = await _userService.CreateUserAsync(userRegisterDto);
+        var result = await _userService.CreateUserAsync(userRegisterDto);
 
-        if (string.IsNullOrEmpty(userToken))
+        if (!result.IsSuccess)
         {
-            return BadRequest("User registration failed.");
+            return BadRequest(result);
         }
 
-        return Ok(userToken);
+        return Ok(result);
     }
 
     [HttpPost("login")]
@@ -43,12 +46,7 @@ public class UserController : Controller
             return BadRequest("User login data is null.");
         }
 
-        var userToken = await _userService.CheckUserLogin(userLoginDto);
-
-        if (string.IsNullOrEmpty(userToken))
-        {
-            return Unauthorized("Invalid username or password.");
-        }
+        var userToken = await _userService.CheckUserLoginAsync(userLoginDto);
 
         return Ok(userToken);
     }
