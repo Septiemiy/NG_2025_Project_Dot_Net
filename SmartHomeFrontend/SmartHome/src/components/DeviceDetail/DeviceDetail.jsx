@@ -40,10 +40,10 @@ export default function DevicePage() {
 
   return (
     <div>
-      <h2 className="text-xl font-bold">Device {deviceId}</h2>
+      <h2>Device {deviceId}</h2>
       {telemetry
-        ? <pre className="bg-gray-100 p-2 rounded">{JSON.stringify(telemetry, null, 2)}</pre>
-        : <p className="italic text-gray-500">Waiting for telemetry…</p>}
+        ? <pre>{JSON.stringify(telemetry, null, 2)}</pre>
+        : <p>Waiting for telemetry…</p>}
     </div>
   );
 }

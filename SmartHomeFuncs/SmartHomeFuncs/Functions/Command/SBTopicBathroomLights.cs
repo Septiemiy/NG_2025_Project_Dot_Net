@@ -4,7 +4,7 @@ using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
-namespace SmartHomeFuncs.Functions;
+namespace SmartHomeFuncs.Functions.Command;
 
 public class SBTopicBathroomLights
 {

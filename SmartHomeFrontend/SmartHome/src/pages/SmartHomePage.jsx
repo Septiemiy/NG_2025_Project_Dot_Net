@@ -1,10 +1,14 @@
-import DeviceDetail from "../components/DeviceDetail/DeviceDetail";
+
 import { Outlet } from "react-router-dom";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 export default function SmartHomePage() {
     return (
         <>
-            <Outlet />
+            <Sidebar />
+            <div>
+                <Outlet />
+            </div>
         </>
     );
 }

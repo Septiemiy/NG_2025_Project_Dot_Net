@@ -31,16 +31,14 @@ public class SBQueueTelemetry
             "application/json"
         );
 
-        var resposnse = await _httpClient.PostAsync(_configuration["MicroserviceEndpointUrl"], content);
+        var resposnse = await _httpClient.PostAsync(_configuration["BFFTelemetryEndpointUrl"], content);
 
         if (resposnse.IsSuccessStatusCode)
         {
-            Console.WriteLine($"Message processed successfully: {message.Body.ToString()}");
             await messageActions.CompleteMessageAsync(message);
         }
         else
         {
-            Console.WriteLine($"Failed to process message: {message.Body.ToString()}");
             await messageActions.AbandonMessageAsync(message);
         }
 
