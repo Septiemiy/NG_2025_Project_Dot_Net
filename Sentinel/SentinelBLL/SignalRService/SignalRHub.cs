@@ -9,14 +9,16 @@ namespace SentinelBLL.SignalRService
 {
     public class SignalRHub : Hub
     {
-        public Task Subscribe(Guid deviceId)
+        public async Task Subscribe(Guid deviceId)
         {
-            return Groups.AddToGroupAsync(Context.ConnectionId, $"device-{deviceId}");
+            await Groups.AddToGroupAsync(Context.ConnectionId, $"device-{deviceId}");
+            return;
         }
 
-        public Task Unsubscribe(Guid deviceId)
+        public async Task Unsubscribe(Guid deviceId)
         {
-            return Groups.RemoveFromGroupAsync(Context.ConnectionId, $"device-{deviceId}");
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, $"device-{deviceId}");
+            return;
         }
     }
 }

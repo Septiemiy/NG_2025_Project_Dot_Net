@@ -19,6 +19,7 @@ namespace DeviceGatewayBLL
             services.AddScoped<ICommandService, CommandService>();
             services.AddScoped<ITelemetryService, TelemetryService>();
             services.AddScoped<IDeviceService, DeviceService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
             services.AddSingleton<ServiceBusClient>(provider =>
             {
@@ -26,9 +27,14 @@ namespace DeviceGatewayBLL
                 return new ServiceBusClient(connectionString);
             });
 
-            services.AddHttpClient("RegisterDeviceClient", client =>
+            services.AddHttpClient("DevicesClient", client =>
             {
-                client.BaseAddress = new Uri(configuration.GetConnectionString("RegisterDeviceHttpTriggerUrl"));
+                client.BaseAddress = new Uri(configuration.GetConnectionString("HttpTriggersUrl"));
+            });
+
+            services.AddHttpClient("CategoriesClient", client =>
+            {
+                client.BaseAddress = new Uri(configuration.GetConnectionString("HttpTriggersUrl"));
             });
 
             services.AddAutoMapper(typeof(TriggerMapperProfile));

@@ -14,7 +14,7 @@ namespace SentinelBLL.Clients
         Task<RegisterLoginResultDTO> CreateUserAsync([Body] UserRegisterDTO userRegisterDTO);
 
         [Post("/api/user/login")]
-        Task<string> LoginUserAsync([Body] UserLoginDTO userLoginDTO);
+        Task<RegisterLoginResultDTO> LoginUserAsync([Body] UserLoginDTO userLoginDTO);
 
     }
 }

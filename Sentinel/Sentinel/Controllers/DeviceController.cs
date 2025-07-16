@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SentinelBLL.Models;
 using SentinelBLL.Service.Interface;
 
@@ -15,11 +16,37 @@ public class DeviceController : ControllerBase
         _deviceService = deviceService;
     }
 
-    [HttpPost("register")]
+    [HttpPost("registerDevice")]
     public async Task<IActionResult> RegisterdeviceAsync([FromBody] DeviceDTO deviceDTO)
     {
-        var deviceData = await _deviceService.RegisterDeviceAsync(deviceDTO);
+        var result = await _deviceService.RegisterDeviceAsync(deviceDTO);
 
-        return Ok(deviceData);
+        return Ok(result);
+    }
+
+    [HttpGet("getAll")]
+    public async Task<IActionResult> GetAllDevicesAsync()
+    {
+        var devices = await _deviceService.GetAllDevicesAsync();
+        
+        if (devices == null)
+        {
+            return NotFound(new { message = "No devices found" });
+        }
+        
+        return Ok(devices);
+    }
+
+    [HttpGet("get/{deviceId}")]
+    public async Task<IActionResult> GetDeviceByIdAsync(Guid deviceId)
+    {
+        var device = await _deviceService.GetDeviceByIdAsync(deviceId);
+
+        if (device == null)
+        {
+            return NotFound(new { message = "Device not found" });
+        }
+
+        return Ok(device);
     }
 }

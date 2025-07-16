@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SentinelBLL.Models;
 using SentinelBLL.Service.Interface;
 
@@ -15,6 +16,7 @@ public class CommandController : ControllerBase
         _commandService = commandService;
     }
 
+    [Authorize]
     [HttpPost("createCommand")]
     public async Task<IActionResult> CreateCommand([FromBody] CommandDTO commandDTO)
     {

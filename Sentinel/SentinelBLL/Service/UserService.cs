@@ -35,9 +35,20 @@ namespace SentinelBLL.Service
             }
         }
 
-        public async Task<string> LoginUserAsync(UserLoginDTO userLoginDTO)
+        public async Task<RegisterLoginResultDTO> LoginUserAsync(UserLoginDTO userLoginDTO)
         {
-            return await _userClient.LoginUserAsync(userLoginDTO);
+            try
+            {
+                var response = await _userClient.LoginUserAsync(userLoginDTO);
+
+                return response;
+            }
+            catch (ApiException ex)
+            {
+                var error = await ex.GetContentAsAsync<RegisterLoginResultDTO>();
+
+                return error;
+            }
         }
     }
 }

@@ -29,6 +29,21 @@ namespace SentinelBLL.Injections
 
             services.AddRefitClient<ITelemetryClient>()
                 .ConfigureHttpClient(client => client.BaseAddress = new Uri(deviceGatewaySettings.BaseAddress));
+
+            services.AddRefitClient<ICommandClient>()
+                .ConfigureHttpClient(client => client.BaseAddress = new Uri(deviceGatewaySettings.BaseAddress));
+
+            services.AddRefitClient<IDeviceClient>()
+                .ConfigureHttpClient(client => client.BaseAddress = new Uri(deviceGatewaySettings.BaseAddress));
+
+            services.AddRefitClient<IThresholdClient>()
+                .ConfigureHttpClient(client => client.BaseAddress = new Uri(deviceGatewaySettings.BaseAddress));
+
+            services.AddRefitClient<ITriggerClient>()
+                .ConfigureHttpClient(client => client.BaseAddress = new Uri(deviceGatewaySettings.BaseAddress));
+
+            services.AddRefitClient<ICategoryClient>()
+                .ConfigureHttpClient(client => client.BaseAddress = new Uri(deviceGatewaySettings.BaseAddress));
         }
     }
 }

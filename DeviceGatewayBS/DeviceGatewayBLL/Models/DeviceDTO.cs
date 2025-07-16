@@ -11,8 +11,10 @@ namespace DeviceGatewayBLL.Models
         public Guid DeviceId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Guid UserId { get; set; }
         public string Type { get; set; }
         public string Location { get; set; }
+        public Guid CategoryId { get; set; }
+        public Guid UserId { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

@@ -30,8 +30,8 @@ public class UserController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> LoginUserAsync([FromBody] UserLoginDTO userLoginDto)
     {
-        var userToken = await _userService.LoginUserAsync(userLoginDto);
+        var result = await _userService.LoginUserAsync(userLoginDto);
                        
-        return Ok(userToken);
+        return Ok(result);
     }
 }

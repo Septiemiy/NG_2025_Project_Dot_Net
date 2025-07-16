@@ -43,11 +43,20 @@ public class UserController : Controller
     {
         if (userLoginDto == null)
         {
-            return BadRequest("User login data is null.");
+            return BadRequest(new RegisterLoginResultDTO
+            {
+                IsSuccess = false,
+                Message = "User login data is null."
+            });
         }
 
-        var userToken = await _userService.CheckUserLoginAsync(userLoginDto);
+        var result = await _userService.CheckUserLoginAsync(userLoginDto);
 
-        return Ok(userToken);
+        if (!result.IsSuccess)
+        {
+            return Unauthorized(result);
+        }
+
+        return Ok(result);
     }
 }

@@ -9,6 +9,8 @@ namespace SentinelBLL.Service.Interface
 {
     public interface IDeviceService
     {
-        Task<DeviceDTO> RegisterDeviceAsync(DeviceDTO deviceDTO);
+        Task<RegisterDeviceResultDTO> RegisterDeviceAsync(DeviceDTO deviceDTO);
+        Task<ICollection<DeviceDTO>> GetAllDevicesAsync();
+        Task<DeviceDTO> GetDeviceByIdAsync(Guid deviceId);
     }
 }

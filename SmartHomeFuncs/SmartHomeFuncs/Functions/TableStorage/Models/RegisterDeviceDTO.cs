@@ -11,9 +11,11 @@ namespace SmartHomeFuncs.Functions.TableStorage.Models
         public string DeviceId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string UserId { get; set; }
         public string Type { get; set; }
         public string Location { get; set; }
+        public string CategoryId { get; set; }
+        public string UserId { get; set; }
+        public DateTime CreatedAt { get; set; }
 
     }
 }

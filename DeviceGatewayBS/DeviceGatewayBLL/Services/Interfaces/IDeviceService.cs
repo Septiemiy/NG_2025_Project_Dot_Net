@@ -10,5 +10,7 @@ namespace DeviceGatewayBLL.Services.Interfaces
     public interface IDeviceService
     {
         Task<HttpResponseMessage> RegisterDeviceAsync(DeviceDTO deviceDTO);
+        Task<HttpResponseMessage> GetDevicesAsync();
+        Task<HttpResponseMessage> GetDeviceByIdAsync(Guid deviceId);
     }
 }

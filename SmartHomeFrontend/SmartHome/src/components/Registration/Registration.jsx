@@ -22,12 +22,10 @@ export default function Registration() {
                 username,
                 password,
                 email,
-                role: 0,
+                role: 0
             });
 
             const data = response.data;
-            
-            console.log('Response data:', data);
 
             if(data.isSuccess) {
                 setSuccess(data.message);
@@ -53,18 +51,19 @@ export default function Registration() {
                     {success && <div className="success-message">{success}</div>}
                     {error && <div className="error-message">{error}</div>}
                     <div>
-                        <input type="text" id="username" value={username} placeholder="Username"
+                        <input type="text" value={username} placeholder="Username"
                         onChange={(data) => setUsername(data.target.value)} required />
                     </div>
                     <div>
-                        <input type="email" id="email" value={email} placeholder="Email"
+                        <input type="email" value={email} placeholder="Email"
                         onChange={(data) => setEmail(data.target.value)} required />
                     </div>
                     <div>
-                        <input type="password" id="password" placeholder="Password"
+                        <input type="password" placeholder="Password"
                         onChange={(data) => setPassword(data.target.value)} required />
                     </div>
                     <button type="submit">Sign in</button>
+                    <p>Already registered? <span onClick={() => navigate("/login")}>Login in</span></p>
                 </form>
             </div>
         </>

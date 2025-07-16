@@ -11,6 +11,6 @@ namespace SentinelBLL.Clients
     public interface ITelemetryClient
     {
         [Post("/api/telemetry/get-data")]
-        Task<TelemetryDTO> GetTelemetryDataAsync([Body] TelemetryDTO telemetryDTO);
+        Task<Guid> SaveTelemetryDataAsync([Body] TelemetryDTO telemetryDTO);
     }
 }

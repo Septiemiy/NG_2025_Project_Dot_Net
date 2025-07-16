@@ -19,9 +19,9 @@ namespace SentinelBLL.Service
             _telemetryClient = telemetryClient;
         }
 
-        public async Task<TelemetryDTO> GetTelemetryDataAsync(TelemetryDTO telemetryDTO)
+        public async Task<Guid> SaveTelemetryDataAsync(TelemetryDTO telemetryDTO)
         {
-            return await _telemetryClient.GetTelemetryDataAsync(telemetryDTO) ;
+            return await _telemetryClient.SaveTelemetryDataAsync(telemetryDTO) ;
         }
     }
 }

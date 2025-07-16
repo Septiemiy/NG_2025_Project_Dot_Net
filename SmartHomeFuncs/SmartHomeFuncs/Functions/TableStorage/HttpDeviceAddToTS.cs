@@ -16,7 +16,9 @@ public class HttpDeviceAddToTS
     private const string TableName = "RegisteredDevices";
 
     [Function(nameof(HttpDeviceAddToTS))]
-    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "device/register")] HttpRequest req)
+    public async Task<IActionResult> Run(
+        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "device/register")] 
+        HttpRequest req)
     {
         var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
         
@@ -27,7 +29,18 @@ public class HttpDeviceAddToTS
 
         try
         {
-            var entity = new DeviceEntity(PartitionKey, registerDeviceDTO.DeviceId, registerDeviceDTO);
+            var entity = new DeviceEntity
+            {
+                PartitionKey = PartitionKey,
+                RowKey = registerDeviceDTO.DeviceId,
+                Name = registerDeviceDTO.Name,
+                Description = registerDeviceDTO.Description,
+                Type = registerDeviceDTO.Type,
+                Location = registerDeviceDTO.Location,
+                CategoryId = registerDeviceDTO.CategoryId,
+                UserId = registerDeviceDTO.UserId,
+                CreatedAt = registerDeviceDTO.CreatedAt
+            };
             var table = await GetTableStorage.GetTableAsync(TableName);
             await table.ExecuteAsync(TableOperation.Insert(entity));
         }
@@ -37,6 +50,6 @@ public class HttpDeviceAddToTS
             return new StatusCodeResult(StatusCodes.Status500InternalServerError);
         }
 
-        return new OkObjectResult($"Device {registerDeviceDTO.DeviceId} added successfully");
+        return new OkObjectResult($"Device added successfully");
     }
 }

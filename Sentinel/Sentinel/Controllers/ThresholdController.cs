@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SentinelBLL.Models;
 using SentinelBLL.Service.Interface;
 
@@ -15,6 +16,7 @@ public class ThresholdController : ControllerBase
         _thresholdService = thresholdService;
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost("createThreshold")]
     public async Task<IActionResult> CreateThreshold([FromBody] ThresholdDTO thresholdDTO)
     {

@@ -56,6 +56,10 @@
   background-color: #46166b;
 }
 
+.registration-form p {
+  text-align: center;
+}
+
 .error-message {
   color: #ff4d4d;
   margin-bottom: 1rem;

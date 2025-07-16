@@ -3,14 +3,14 @@ import './App.css'
 import Pages from './Pages'
 import SmartHomePage from "./pages/SmartHomePage";
 import DeviceDetailPage from "./pages/DeviceDetailPage";
+import CheckUserLogin from "./components/CheckUserLogin/CheckUserLogin";
 
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
-          <Route path="/" element={<SmartHomePage />} >
-            <Route index element={<p>Choose device</p>} />
+          <Route path="/" element={<CheckUserLogin> <SmartHomePage /> </CheckUserLogin>} >
             <Route path="device/:deviceId" element={<DeviceDetailPage />} />
           </Route>
         {

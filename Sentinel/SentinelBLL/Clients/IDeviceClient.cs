@@ -10,7 +10,13 @@ namespace SentinelBLL.Clients
 {
     public interface IDeviceClient
     {
-        [Post("/api/device/register")]
-        Task<DeviceDTO> RegisterDeviceAsync(DeviceDTO deviceDTO);
+        [Post("/api/device/registerDevice")]
+        Task<RegisterDeviceResultDTO> RegisterDeviceAsync([Body] DeviceDTO deviceDTO);
+
+        [Get("/api/device/getAll")]
+        Task<ICollection<DeviceDTO>> GetAllDevicesAsync();
+
+        [Get("/api/device/get/{deviceId}")]
+        Task<DeviceDTO> GetDeviceByIdAsync(Guid deviceId);
     }
 }

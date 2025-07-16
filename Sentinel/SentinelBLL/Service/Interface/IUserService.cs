@@ -10,6 +10,6 @@ namespace SentinelBLL.Service.Interface
     public interface IUserService
     {
         Task<RegisterLoginResultDTO> CreateUserAsync(UserRegisterDTO userRegisterDTO);
-        Task<string> LoginUserAsync(UserLoginDTO userLoginDTO);
+        Task<RegisterLoginResultDTO> LoginUserAsync(UserLoginDTO userLoginDTO);
     }
 }

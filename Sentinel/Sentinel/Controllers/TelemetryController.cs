@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using SentinelBLL.Models;
 using SentinelBLL.Service.Interface;
@@ -22,11 +23,11 @@ public class TelemetryController : ControllerBase
     [HttpPost("get-data")]
     public async Task<IActionResult> GetTelemetryData([FromBody] TelemetryDTO telemetryDTO)
     {
-        var telemetryData = await _telemetryService.GetTelemetryDataAsync(telemetryDTO);
+        var telemetryGuid = await _telemetryService.SaveTelemetryDataAsync(telemetryDTO);
 
         await _hubContext.Clients
-            .Group($"device-{telemetryData.DeviceId}")
-            .SendAsync("ReceiveTelemetryData", telemetryData);
+            .Group($"device-{telemetryDTO.DeviceId}")
+            .SendAsync("ReceiveTelemetryData", telemetryDTO);
 
         return Ok();
     }

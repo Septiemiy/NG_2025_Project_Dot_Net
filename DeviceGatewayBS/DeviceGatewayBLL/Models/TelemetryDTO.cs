@@ -9,7 +9,7 @@ namespace DeviceGatewayBLL.Models
     public class TelemetryDTO
     {
         public Guid DeviceId { get; set; }
-        public DateTime Timestamp { get; set; } = DateTime.Now;
+        public DateTime Timestamp { get; set; }
         public string DataType { get; set; }
         public string DataValue { get; set; }
     }

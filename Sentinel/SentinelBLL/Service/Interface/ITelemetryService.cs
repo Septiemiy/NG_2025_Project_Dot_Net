@@ -9,6 +9,6 @@ namespace SentinelBLL.Service.Interface
 {
     public interface ITelemetryService
     {
-        Task<TelemetryDTO> GetTelemetryDataAsync(TelemetryDTO telemetryDTO);
+        Task<Guid> SaveTelemetryDataAsync(TelemetryDTO telemetryDTO);
     }
 }

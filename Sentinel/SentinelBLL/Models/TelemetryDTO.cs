@@ -9,7 +9,7 @@ namespace SentinelBLL.Models
     public class TelemetryDTO
     {
         public Guid DeviceId { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTime Timestamp { get; set; } = DateTime.Now;
         public string DataType { get; set; }
         public string DataValue { get; set; }
     }

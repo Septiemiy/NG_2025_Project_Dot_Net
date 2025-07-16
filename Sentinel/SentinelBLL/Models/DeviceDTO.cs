@@ -11,8 +11,10 @@ namespace SentinelBLL.Models
         public Guid DeviceId { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
         public string Description { get; set; }
-        public string UserId { get; set; }
         public string Type { get; set; }
         public string Location { get; set; }
+        public Guid CategoryId { get; set; }
+        public Guid UserId { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }

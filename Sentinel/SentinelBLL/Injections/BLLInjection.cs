@@ -16,6 +16,11 @@ namespace SentinelBLL.Injections
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITelemetryService, TelemetryService>();
+            services.AddScoped<IDeviceService, DeviceService>();
+            services.AddScoped<ICommandService, CommandService>();
+            services.AddScoped<IThresholdService, ThresholdService>();
+            services.AddScoped<ITriggerService, TriggerService>();
+            services.AddScoped<ICategoryService, CategoryService>();
         }
     }
 }

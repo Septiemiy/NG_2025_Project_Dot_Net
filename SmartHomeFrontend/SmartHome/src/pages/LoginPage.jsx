@@ -1,10 +1,12 @@
 import Login from '../components/Login/Login.jsx';
+import "./css/LoginPage.css";
 
 export default function LoginPage() {
     return (
         <>
-            <h1>Login in</h1>
-            <Login />
+            <div className='login-page'>
+                <Login />
+            </div>
         </>
     );
 }
