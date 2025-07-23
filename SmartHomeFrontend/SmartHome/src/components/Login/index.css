@@ -66,16 +66,16 @@
   text-decoration: underline;
 }
 
-.error-message {
-  color: #ff4d4d;
+.success-message {
+  color: #4caf50;
   margin-bottom: 1rem;
   font-weight: bold;
   text-align: center;
 }
 
-.success-message {
-  color: #4caf50;
-  margin-bottom: 1rem;
+.error-message {
+  color: #ff4d4d;
+  margin-bottom: -2rem;
   font-weight: bold;
   text-align: center;
 }

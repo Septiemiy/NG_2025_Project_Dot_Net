@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DeviceGatewayBLL.Services
@@ -18,7 +19,7 @@ namespace DeviceGatewayBLL.Services
         private readonly IMapper _mapper;
         private readonly ServiceBusSender _serviceBusSender;
         private const string TopicName = "device-commands";
-        private readonly string[] roomsFilter = new[] { "kitchen", "bathroom", "livingroom" };
+        private const string Filter = "command";
 
         public CommandService(ICommandRepository commandRepository, IMapper mapper, ServiceBusClient serviceBusClient)
         {
@@ -36,20 +37,26 @@ namespace DeviceGatewayBLL.Services
             return command.Id;
         }
 
-        public async Task<bool> SendCommandToAll(string command)
+        public async Task<bool> SendCommandAsync(CommandDTO commandDTO)
         {
             try
             {
-                foreach (var room in roomsFilter)
+                var toSerialize = new
                 {
-                    var message = new ServiceBusMessage(command)
-                    {
-                        ContentType = "application/json",
-                    };
-                    message.ApplicationProperties["room"] = room;
+                    DeviceId = commandDTO.DeviceId,
+                    CommandName = commandDTO.CommandName,
+                    CommandValue = commandDTO.CommandValue
+                };
 
-                    await _serviceBusSender.SendMessageAsync(message);
-                }
+                var commandJson = JsonSerializer.Serialize(toSerialize);
+
+                var message = new ServiceBusMessage(commandJson)
+                {
+                    ContentType = "application/json",
+                };
+                message.ApplicationProperties["type"] = Filter;
+
+                await _serviceBusSender.SendMessageAsync(message);
                 
                 return true;
             }

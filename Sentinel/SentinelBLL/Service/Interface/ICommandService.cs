@@ -9,6 +9,6 @@ namespace SentinelBLL.Service.Interface
 {
     public interface ICommandService
     {
-        Task<CommandDTO> CreateCommandAsync(CommandDTO commandDTO);
+        Task<CommandDTO> SendCommandAsync(CommandDTO commandDTO);
     }
 }

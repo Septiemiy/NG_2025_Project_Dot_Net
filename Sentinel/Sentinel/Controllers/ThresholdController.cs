@@ -7,6 +7,7 @@ namespace Sentinel.Controllers;
 
 [Route("api/threshold")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class ThresholdController : ControllerBase
 {
     private readonly IThresholdService _thresholdService;
@@ -21,6 +22,11 @@ public class ThresholdController : ControllerBase
     public async Task<IActionResult> CreateThreshold([FromBody] ThresholdDTO thresholdDTO)
     {
         var createdThreshold = await _thresholdService.CreateThresholdAsync(thresholdDTO);
+
+        if (createdThreshold == null)
+        {
+            return BadRequest(new { message = "Failed to create threshold. Maybe already exists" });
+        }
 
         return Ok(createdThreshold);
     }

@@ -1,4 +1,5 @@
-﻿using SentinelBLL.Clients;
+﻿using Refit;
+using SentinelBLL.Clients;
 using SentinelBLL.Models;
 using SentinelBLL.Service.Interface;
 using System;
@@ -20,7 +21,14 @@ namespace SentinelBLL.Service
         
         public async Task<ThresholdDTO> CreateThresholdAsync(ThresholdDTO thresholdDTO)
         {
-            return await _thresholdClient.CreateThresholdAsync(thresholdDTO);
+            try
+            {
+                return await _thresholdClient.CreateThresholdAsync(thresholdDTO);
+            }
+            catch(ApiException ex)
+            {
+                return null;
+            }
         }
     }
 }

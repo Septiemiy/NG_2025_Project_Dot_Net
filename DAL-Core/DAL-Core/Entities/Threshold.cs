@@ -10,10 +10,9 @@ namespace DAL_Core.Entities
     public class Threshold : BaseEntity
     {
         public Guid DeviceId { get; set; }
-        public string ThresholdName { get; set; }
+        public string ThresholdCondition { get; set; }
+        public string Value { get; set; }
         public DateTime Timestamp { get; set; }
-        public string Condition { get; set; }
-        public string Action { get; set; }
         public ConditionsStatus Status { get; set; }
     }
 }

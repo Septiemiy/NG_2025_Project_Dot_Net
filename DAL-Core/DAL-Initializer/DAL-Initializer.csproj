@@ -10,7 +10,7 @@
     <Title>DAL for project</Title>
     <PackageId>DAL-Core_NG_Project</PackageId>
     <Authors>Septimiy</Authors>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>

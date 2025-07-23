@@ -1,10 +1,14 @@
-﻿using SentinelBLL.Clients;
+﻿using Microsoft.AspNetCore.Http;
+using Refit;
+using SentinelBLL.Clients;
 using SentinelBLL.Models;
 using SentinelBLL.Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SentinelBLL.Service
@@ -18,9 +22,16 @@ namespace SentinelBLL.Service
             _commandClient = commandClient;
         }
 
-        public async Task<CommandDTO> CreateCommandAsync(CommandDTO commandDTO)
+        public async Task<CommandDTO> SendCommandAsync(CommandDTO commandDTO)
         {
-            return await _commandClient.CreateCommandAsync(commandDTO);
+            try
+            {
+                return await _commandClient.SendCommandAsync(commandDTO);
+            }
+            catch(ApiException ex)
+            {
+                return null;
+            }
         }
     }
 }

@@ -10,10 +10,12 @@ namespace Sentinel.Controllers;
 public class CategoryController : ControllerBase
 {
     private readonly ICategoryService _categoryService;
+    private readonly ILogger<CategoryController> _logger;
 
-    public CategoryController(ICategoryService categoryService)
+    public CategoryController(ICategoryService categoryService, ILogger<CategoryController> logger)
     {
         _categoryService = categoryService;
+        _logger = logger;
     }
 
     [HttpGet("getAll")]
@@ -23,9 +25,11 @@ public class CategoryController : ControllerBase
 
         if (categories == null)
         {
+            _logger.LogError("[ERROR]: Failed to retrieve categories.");
             return NotFound(new { message = "Error get categories" });
         }
 
+        _logger.LogInformation("[INFO]: Categories retrieved successfully: {Count} categories found", categories.Count);
         return Ok(categories);
     }
 
@@ -37,11 +41,14 @@ public class CategoryController : ControllerBase
 
         if (categoryDTO == null || string.IsNullOrEmpty(categoryDTO.Name))
         {
+            _logger.LogError("[ERROR]: Invalid category data provided.");
             return BadRequest(new { message = "Invalid category data" });
         }
         
+        _logger.LogInformation("[INFO]: Adding new category: {CategoryName}", categoryDTO.Name);
         var result = await _categoryService.AddCategoryAsync(categoryDTO);
-
+        
+        _logger.LogInformation("[INFO]: Category added successfully: {CategoryName}", categoryDTO.Name);
         return Ok(new { message = result });
     }
 

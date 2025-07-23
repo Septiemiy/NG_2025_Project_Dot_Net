@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace SentinelBLL.Enums
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum CommandStatus
     {
         Failed = 0,

@@ -10,6 +10,6 @@ namespace DeviceGatewayBLL.Services.Interfaces
     public interface ICommandService
     {
         Task<Guid> AddCommandAsync(CommandDTO commandDTO);
-        Task<bool> SendCommandToAll(string command);
+        Task<bool> SendCommandAsync(CommandDTO commandDTO);
     }
 }

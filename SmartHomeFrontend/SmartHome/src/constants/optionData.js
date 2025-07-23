@@ -1,10 +1,13 @@
 export const DEVICE_TYPES = [
   { value: "light", label: "Light" },
+  { value: "temperatureSensor", label: "Temperature Sensor" },
   { value: "thermostat", label: "Thermostat" },
-  { value: "door_lock", label: "Door lock" },
-  { value: "camera", label: "Camera" },
-  { value: "humidifier", label: "Humidifier" },
-  { value: "smart_plug", label: "Smart plug" }
+  { value: "door", label: "Doors" },
+  { value: "humidity", label: "Humidity" },
+  { value: "smokeAlarm", label: "Smoke Alarm" },
+  { value: "washingMachine", label: "Washing Machine" },
+  { value: "bathroomShower", label: "Bathroom Shower" },
+  { value: "conditioner", label: "Conditioner" }
 ];
 
 export const DEVICE_LOCATION = [

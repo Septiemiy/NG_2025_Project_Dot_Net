@@ -14,7 +14,6 @@ namespace DeviceGatewayBLL
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddScoped<ITriggerService, TriggerService>();
             services.AddScoped<IThresholdService, ThresholdService>();
             services.AddScoped<ICommandService, CommandService>();
             services.AddScoped<ITelemetryService, TelemetryService>();
@@ -37,7 +36,6 @@ namespace DeviceGatewayBLL
                 client.BaseAddress = new Uri(configuration.GetConnectionString("HttpTriggersUrl"));
             });
 
-            services.AddAutoMapper(typeof(TriggerMapperProfile));
             services.AddAutoMapper(typeof(ThresholdMapperProfile));
             services.AddAutoMapper(typeof(CommandMapperProfile));
             services.AddAutoMapper(typeof(TelemetryMapperProfile));

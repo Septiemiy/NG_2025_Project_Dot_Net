@@ -9,5 +9,6 @@ namespace DeviceGatewayDAL.Repositories.Interface
 {
     public interface IThresholdRepository : IRepository<Threshold>
     {
+        Task<Threshold> GetThresholdByConditionAndValueAsync(string condition, string value);
     }
 }

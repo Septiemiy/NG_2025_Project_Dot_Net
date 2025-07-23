@@ -22,7 +22,6 @@ namespace DeviceGatewayDAL
                 options.UseSqlServer(configuration.GetConnectionString("DbConnectionString")));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<ITriggerRepository, TriggerRepository>();
             services.AddScoped<IThresholdRepository, ThresholdRepository>();
             services.AddScoped<ICommandRepository, CommandRepository>();
             services.AddScoped<ITelemetryRepository, TelemetryRepository>();

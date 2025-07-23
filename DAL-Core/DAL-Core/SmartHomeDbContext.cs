@@ -17,7 +17,6 @@ namespace DAL_Core
         public DbSet<Command> Commands { get; set; }
         public DbSet<Telemetry> Telemetries { get; set; }
         public DbSet<Threshold> Thresholds { get; set; }
-        public DbSet<Trigger> Triggers { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,7 +29,6 @@ namespace DAL_Core
             modelBuilder.ApplyConfiguration(new CommandConfiguration());
             modelBuilder.ApplyConfiguration(new TelemetryConfiguration());
             modelBuilder.ApplyConfiguration(new ThresholdConfiguration());
-            modelBuilder.ApplyConfiguration(new TriggerConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
 
             base.OnModelCreating(modelBuilder);

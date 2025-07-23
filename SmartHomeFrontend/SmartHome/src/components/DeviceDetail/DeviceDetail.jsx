@@ -3,15 +3,27 @@ import { useParams } from "react-router-dom";
 import * as SignalR from "@microsoft/signalr";
 import axiosClient from "../../services/axiosClients";
 import { DEVICE_CONFIG } from "../../constants/deviceData";
+import getUserRole from "../../services/getUserRole";
 import "./index.css";
 
 export default function DevicePage() {
   const { deviceId } = useParams();
   const [device, setDevice] = useState(null);
   const [telemetry, setTelemetry] = useState({});
+  const [selectedCommand, setSelectedCommand] = useState("");
+  const [requiresValue, setRequiresValue] = useState(false)
+  const [commandValue, setCommandValue] = useState("")
+  const [selectedThreshold, setSelectedThreshold] = useState("");
+  const [thresholdValue, setThresholdValue] = useState("");
+  const [successCommand, setSuccessCommand] = useState("");
+  const [successThreshold, setSuccessThreshold] = useState("");
   const [error, setError] = useState("");
+  const [errorCommand, setErrorCommand] = useState("");
+  const [errorThreshold, setErrorThreshold] = useState("");
   const telemetryRef = useRef({});
   const token = localStorage.getItem("jwtToken");
+  const userRole = getUserRole()
+  const isAdmin = userRole === "Admin";
 
   useEffect(() => {
     (async () => {
@@ -65,6 +77,53 @@ export default function DevicePage() {
     };
   }, [device, deviceId, token]);
 
+  const handleSendCommand = async (command, value) => {
+    setSuccessCommand("");
+    if(requiresValue && !value.trim()) {
+      return
+    }
+
+    try {
+      const response = await axiosClient.post('/command/sendCommand', {
+        deviceId: deviceId,
+        commandName: command,
+        value: requiresValue ? value : null,
+        role: userRole
+      })
+      setSuccessCommand("Command sent");
+      setSelectedCommand("");
+      setCommandValue("");
+      setRequiresValue(false);
+      setErrorCommand("");
+    } catch(error) {
+      setErrorCommand(error.message);
+      console.log("Failed to send command: ", error)
+    }
+  };
+
+  const handleSetThreshold = async (threshold, value) => {
+    setSuccessThreshold("");
+    if (!value.trim()) {
+      return;
+    }
+
+    try {
+      const response = await axiosClient.post('/threshold/createThreshold', {
+        deviceId: deviceId,
+        thresholdCondition: threshold,
+        value: value
+      })
+
+      setSuccessThreshold("Threshold sent to create");
+      setSelectedThreshold("");
+      setThresholdValue("");
+      setErrorThreshold("");
+    } catch(error) {
+      setErrorThreshold(error.message);
+      console.log("Failed to create threshold: ", error)
+    }
+  };
+
   if (error) return <p>{error}</p>;
   if (!device) return <p>Loading device...</p>;
 
@@ -98,6 +157,7 @@ export default function DevicePage() {
                   <span className="telemetry-label">{type}</span>
                   <span className="telemetry-value">
                     {telemetry[type]?.value ?? "–"}
+                    {config.telemetryMeasurements[config.telemetryTypes.indexOf(type)]}
                   </span>
                   <span className="telemetry-timestamp">
                     {telemetry[type]?.timestamp ?? "–"}
@@ -108,51 +168,67 @@ export default function DevicePage() {
         </section>
         </div>
         <div className="device-right">
-          {config.commands.length > 0 && (
-            <section className="control-section">
-              <h3>Commands</h3>
-              <div className="control-buttons">
-                {config.commands.map((cmd) => (
-                  <button key={cmd} onClick={() => alert(`Command: ${cmd}`)}>
-                    {cmd}
-                  </button>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {config.triggers.length > 0 && (
-            <section className="control-section">
-              <h3>Triggers</h3>
-              <div className="control-buttons">
-                {config.triggers.map((tr) => (
-                  <button key={tr} onClick={() => alert(`Trigger: ${tr}`)}>
-                    {tr}
-                  </button>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {config.thresholds.length > 0 && (
-            <section className="control-section">
-              <h3>Thresholds</h3>
-              <div className="control-buttons">
-                {config.thresholds.map((th) => (
-                  <div key={th}>
-                    <label>{th}: </label>
-                    <input
-                      type="number"
-                      placeholder={`Set ${th}`}
-                      onBlur={(e) => alert(`Set ${th} to ${e.target.value}`)}
-                    />
+            {config.commands.length > 0 && (
+              <section className="control-section">
+                <h3>Commands</h3>
+                {successCommand && <div className="success-message">{successCommand}</div>}
+                {errorCommand && <div className="error-message">{errorCommand}</div>}
+                <div className="control-vertical">
+                  <div className="control-inline">
+                    <select value={selectedCommand} onChange={(e) => {
+                      const cmdName = e.target.value
+                      setSelectedCommand(cmdName)
+                      const cmdObject = config.commands.find(c => c.name === cmdName)
+                      setRequiresValue(cmdObject?.requiresValue || false)
+                    }}>
+                      <option value="">Select a command</option>
+                      {config.commands.map((cmd) => (
+                        <option key={cmd.name} value={cmd.name}>{cmd.name}</option>
+                      ))}
+                    </select>
+                    <button disabled={!selectedCommand || (requiresValue && !commandValue)} onClick={() => handleSendCommand(selectedCommand, commandValue)}>
+                      Send Command
+                    </button>
                   </div>
-                ))}
-              </div>
-            </section>
-          )}
+                  {requiresValue && (
+                    <input type="text" placeholder="Enter value" value={commandValue} onChange={(e) => setCommandValue(e.target.value)} />
+                  )}
+                </div>
+              </section>
+            )}
+
+            {config.triggers.length > 0 && (
+              <section className="control-section">
+                <h3>Provided Triggers</h3>
+                <div className="control-triggers">
+                  {config.triggers.map((trigger, index) => (
+                    <input type="text" key={index} value={trigger} disabled/>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {isAdmin && config.thresholds.length > 0 && (
+              <section className="control-section">
+                <h3>Thresholds</h3>
+                {successThreshold && <div className="success-message">{successThreshold}</div>}
+                {errorThreshold && <div className="error-message">{errorThreshold}</div>}
+                <div className="control-inline">
+                  <select value={selectedThreshold} onChange={(e) => setSelectedThreshold(e.target.value)}>
+                    <option value="">Select a threshold</option>
+                    {config.thresholds.map((th) => (
+                      <option key={th} value={th}>{th}</option>
+                    ))}
+                  </select>
+                  <button disabled={!selectedThreshold || !thresholdValue} onClick={() => handleSetThreshold(selectedThreshold, thresholdValue)}>
+                    Set Threshold
+                  </button>
+                </div>
+                <input type="text" placeholder="Enter value" value={thresholdValue} onChange={(e) => setThresholdValue(e.target.value)}/>
+              </section>
+            )}
+          </div>
         </div>
-      </div>
     </>
   );
 }

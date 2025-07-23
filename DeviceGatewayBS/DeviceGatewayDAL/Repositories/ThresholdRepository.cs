@@ -1,6 +1,7 @@
 ﻿using DAL_Core;
 using DAL_Core.Entities;
 using DeviceGatewayDAL.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,13 @@ namespace DeviceGatewayDAL.Repositories
         public ThresholdRepository(SmartHomeDbContext ctx) : base(ctx)
         {
             _ctx = ctx;
+        }
+
+        public async Task<Threshold> GetThresholdByConditionAndValueAsync(string condition, string value)
+        {
+            return await _ctx.Thresholds
+                .Where(t => t.ThresholdCondition == condition && t.Value == value)
+                .FirstOrDefaultAsync();
         }
     }
 }

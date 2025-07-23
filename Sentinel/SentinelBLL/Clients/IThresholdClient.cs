@@ -10,7 +10,7 @@ namespace SentinelBLL.Clients
 {
     public interface IThresholdClient
     {
-        [Post("api/threshold/createThreshold")]
+        [Post("/api/threshold/createThreshold")]
         Task<ThresholdDTO> CreateThresholdAsync([Body] ThresholdDTO thresholdDTO);
     }
 }

@@ -39,9 +39,6 @@ namespace SentinelBLL.Injections
             services.AddRefitClient<IThresholdClient>()
                 .ConfigureHttpClient(client => client.BaseAddress = new Uri(deviceGatewaySettings.BaseAddress));
 
-            services.AddRefitClient<ITriggerClient>()
-                .ConfigureHttpClient(client => client.BaseAddress = new Uri(deviceGatewaySettings.BaseAddress));
-
             services.AddRefitClient<ICategoryClient>()
                 .ConfigureHttpClient(client => client.BaseAddress = new Uri(deviceGatewaySettings.BaseAddress));
         }

@@ -10,7 +10,7 @@ namespace SentinelBLL.Clients
 {
     public interface ICommandClient
     {
-        [Post("api/command/createCommand")]
-        Task<CommandDTO> CreateCommandAsync([Body] CommandDTO commandDTO);
+        [Post("/api/command/sendCommand")]
+        Task<CommandDTO> SendCommandAsync([Body] CommandDTO commandDTO);
     }
 }

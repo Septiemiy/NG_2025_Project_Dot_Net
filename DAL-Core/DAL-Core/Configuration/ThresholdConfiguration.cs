@@ -18,15 +18,11 @@ namespace DAL_Core.Configuration
             builder.Property(t => t.DeviceId)
                 .IsRequired();
 
-            builder.Property(t => t.ThresholdName)
+            builder.Property(t => t.ThresholdCondition)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property(t => t.Condition)
-                .IsRequired()
-                .HasMaxLength(100);
-
-            builder.Property(t => t.Action)
+            builder.Property(t => t.Value)
                 .IsRequired()
                 .HasMaxLength(100);
 

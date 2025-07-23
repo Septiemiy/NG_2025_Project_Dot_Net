@@ -10,5 +10,7 @@ namespace DeviceGatewayBLL.Services.Interfaces
     public interface IThresholdService
     {
         Task<Guid> AddThresholdAsync(ThresholdDTO thresholdDTO);
+        Task<bool> isThresholdExists(ThresholdDTO thresholdDTO);
+        Task<bool> SendThresholdAsync(ThresholdDTO thresholdDTO);
     }
 }

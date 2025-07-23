@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SentinelBLL.Models;
 using SentinelBLL.Service.Interface;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Sentinel.Controllers;
 
@@ -10,17 +12,25 @@ namespace Sentinel.Controllers;
 public class CommandController : ControllerBase
 {
     private readonly ICommandService _commandService;
+    private readonly ILogger<CommandController> _logger;
 
-    public CommandController(ICommandService commandService)
+    public CommandController(ICommandService commandService, ILogger<CommandController> logger)
     {
         _commandService = commandService;
+        _logger = logger;
     }
 
-    [Authorize]
-    [HttpPost("createCommand")]
-    public async Task<IActionResult> CreateCommand([FromBody] CommandDTO commandDTO)
+    [HttpPost("sendCommand")]
+    public async Task<IActionResult> SendCommand([FromBody] CommandDTO commandDTO)
     {
-        var createdCommand = await _commandService.CreateCommandAsync(commandDTO);
+        var createdCommand = await _commandService.SendCommandAsync(commandDTO);
+
+        if (createdCommand == null)
+        {
+            return BadRequest(new { message = "Failed to send command" });
+        }
+
+        _logger.LogInformation("Command sent successfully: {Command}", JsonSerializer.Serialize(createdCommand));
 
         return Ok(createdCommand);
     }

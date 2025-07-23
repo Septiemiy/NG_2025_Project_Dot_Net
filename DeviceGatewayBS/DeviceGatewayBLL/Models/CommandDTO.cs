@@ -11,8 +11,9 @@ namespace DeviceGatewayBLL.Models
     {
         public Guid DeviceId { get; set; }
         public string CommandName { get; set; }
-        public DateTime Timestamp { get; set; } = DateTime.Now;
-        public CommandStatus Status { get; set; }
+        public string? CommandValue { get; set; }
+        public DateTime? Timestamp { get; set; } = DateTime.Now;
+        public CommandStatus? Status { get; set; }
         public UsersRoles Role { get; set; }
     }
 }
